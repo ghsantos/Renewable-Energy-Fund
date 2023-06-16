@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { NavigationProp, ParamListBase } from '@react-navigation/native'
 
 import FundCard from '../../Components/FundCard'
 import Header from '../../Components/Header'
@@ -9,7 +10,11 @@ const iconWind = require('../../assets/icon_wind.png')
 const iconSolar = require('../../assets/icon_solar.png')
 const iconNature = require('../../assets/icon_nature.png')
 
-function Home(): JSX.Element {
+interface HomeProps {
+  navigation: NavigationProp<ParamListBase>
+}
+
+function Home({ navigation }: HomeProps): JSX.Element {
   return (
     <ScrollView style={styles.container}>
       <Header
@@ -19,7 +24,7 @@ function Home(): JSX.Element {
       />
 
       <View style={[styles.defaultContent, styles.fundTitleContainer]}>
-        <Text style={styles.fundTitle}>Funds</Text>
+        <Text style={styles.fundTitle} onPress={() => navigation.navigate('AssetDetails')}>Funds</Text>
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>

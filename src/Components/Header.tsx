@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 
 const iconArrowUp = require('../assets/icon_arrow_up.png')
 const iconNotification = require('../assets/icon_notification.png')
@@ -17,7 +17,7 @@ export default function Header({
   portfolioVariation,
 }: HeaderProps): JSX.Element {
   return (
-    <View>
+    <SafeAreaView>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Image source={iconUser} />
@@ -38,7 +38,7 @@ export default function Header({
       </View>
 
       <View style={styles.line} />
-    </View>
+    </SafeAreaView>
   )
 }
 
