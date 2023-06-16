@@ -1,16 +1,35 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
-const testSlicer = createSlice({
-  name: 'test',
-  initialState: {
-    value: 0,
+interface LoginState {
+  isSignedIn: boolean
+}
+
+const initialState: LoginState = {
+  isSignedIn: false,
+}
+
+const loginSlicer = createSlice({
+  name: 'login',
+  initialState,
+  reducers: {
+    login: state => {
+      state.isSignedIn = true
+    },
+    logout: state => {
+      state.isSignedIn = false
+    },
   },
-  reducers: {},
 })
 
-export default configureStore({
+const store = configureStore({
   reducer: {
-    test: testSlicer.reducer,
+    login: loginSlicer.reducer,
   },
 })
+
+export const { login, logout } = loginSlicer.actions
+
+export type RootState = ReturnType<typeof store.getState>
+
+export default store

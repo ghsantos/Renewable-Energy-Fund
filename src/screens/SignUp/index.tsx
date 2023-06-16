@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
+import CheckBox from '@react-native-community/checkbox'
 
+import useInput, {
+  emailValidation,
+  passwordValidation,
+  nameValidation,
+} from '../../hooks/useInput'
 import Button from '../../Components/Button'
 import Input from '../../Components/Input'
 
@@ -10,42 +16,73 @@ interface SignUpProps {
 }
 
 function SignUp({ navigation }: SignUpProps): JSX.Element {
+  const firstName = useInput('', nameValidation)
+  const lastName = useInput('', nameValidation)
+  const email = useInput('', emailValidation)
+  const password = useInput('', passwordValidation)
+
+  const [agreeTerms, setAgreeTerms] = useState(false)
+
+  const buttonEnable =
+    agreeTerms &&
+    firstName.isValid &&
+    lastName.isValid &&
+    email.isValid &&
+    password.isValid
+
+  useEffect(() => {
+    navigation.setOptions({ title: '' })
+  }, [navigation])
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Create your account</Text>
 
       <Input
         title="First Name"
-        value="Joe"
+        value={firstName.value}
         placeholder="Type your first name"
-        onChange={() => {}}
+        onChange={firstName.onChange}
       />
       <Input
         title="Last Name"
-        value=""
+        value={lastName.value}
         placeholder="Type your last name"
-        onChange={() => {}}
+        onChange={lastName.onChange}
       />
       <Input
         title="Email"
-        value=""
+        value={email.value}
         placeholder="Type your email"
-        onChange={() => {}}
+        type="email-address"
+        onChange={email.onChange}
       />
       <Input
         title="Password"
-        value=""
+        value={password.value}
         placeholder="Minimum 8 characters"
-        onChange={() => {}}
+        secureTextEntry
+        onChange={password.onChange}
       />
 
-      <Text style={styles.agreeTerms}>
-        I am over 18 years of age and I have read and agree to the
-        <Text style={styles.agreeTermsPrimary}> Terms of Service</Text> and
-        <Text style={styles.agreeTermsPrimary}> Privacy policy</Text>.
-      </Text>
+      <View style={styles.agreeTermsContainer}>
+        <CheckBox
+          disabled={false}
+          value={agreeTerms}
+          onValueChange={newValue => setAgreeTerms(newValue)}
+        />
+        <Text style={styles.agreeTerms}>
+          I am over 18 years of age and I have read and agree to the
+          <Text style={styles.agreeTermsPrimary}> Terms of Service</Text> and
+          <Text style={styles.agreeTermsPrimary}> Privacy policy</Text>.
+        </Text>
+      </View>
 
-      <Button title="Create account" onPress={() => navigation.goBack()} />
+      <Button
+        disabled={!buttonEnable}
+        title="Create account"
+        onPress={() => navigation.goBack()}
+      />
 
       <Text style={styles.loginText} onPress={() => navigation.goBack()}>
         Already have an account?
@@ -67,11 +104,18 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 30,
   },
+  agreeTermsContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 30,
+  },
   agreeTerms: {
     fontSize: 12,
     fontWeight: '400',
     color: '#A0A0A0',
-    marginBottom: 30,
+    flex: 1,
+    paddingLeft: 12,
   },
   agreeTermsPrimary: {
     color: '#000',

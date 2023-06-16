@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { StyleSheet, Text, View } from 'react-native'
 import { NavigationProp, ParamListBase } from '@react-navigation/native'
 
+import { login } from '../../story/story'
+import useInput, {
+  emailValidation,
+  passwordValidation,
+} from '../../hooks/useInput'
 import Button from '../../Components/Button'
 import Input from '../../Components/Input'
 
@@ -10,26 +16,41 @@ interface LoginProps {
 }
 
 function Login({ navigation }: LoginProps): JSX.Element {
+  const dispatch = useDispatch()
+
+  const email = useInput('', emailValidation)
+  const password = useInput('', passwordValidation)
+
+  useEffect(() => {
+    navigation.setOptions({ title: '' })
+  }, [navigation])
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>{email.isValid ? 'Login' : 'asdas'}</Text>
       <View style={styles.spacer} />
 
       <Input
         title="Email"
-        value=""
+        value={email.value}
         placeholder="Type your email"
-        onChange={() => {}}
+        type="email-address"
+        onChange={email.onChange}
       />
       <Input
         title="Password"
-        value=""
+        value={password.value}
         placeholder="Minimum 8 characters"
-        onChange={() => {}}
+        secureTextEntry
+        onChange={password.onChange}
       />
 
       <View style={styles.spacer} />
-      <Button title="Login" onPress={() => {}} />
+      <Button
+        title="Login"
+        disabled={!email.isValid || !password.isValid}
+        onPress={() => dispatch(login())}
+      />
 
       <Text
         style={styles.signUpText}
