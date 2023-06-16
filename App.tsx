@@ -13,6 +13,7 @@ import story, { RootState } from './src/story/story'
 import Home from './src/screens/Home'
 import Login from './src/screens/Login'
 import SignUp from './src/screens/SignUp'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const Stack = createNativeStackNavigator()
 
@@ -40,7 +41,9 @@ function NavigationStack(): JSX.Element {
 function App(): JSX.Element {
   return (
     <Provider store={story}>
-      <NavigationStack />
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <NavigationStack />
+      </GestureHandlerRootView>
     </Provider>
   )
 }

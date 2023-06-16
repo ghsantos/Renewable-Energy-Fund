@@ -27,7 +27,7 @@ function Login({ navigation }: LoginProps): JSX.Element {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>{email.isValid ? 'Login' : 'asdas'}</Text>
+      <Text style={styles.title}>Login</Text>
       <View style={styles.spacer} />
 
       <Input
