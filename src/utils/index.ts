@@ -6,7 +6,7 @@ function weightedRandom(mean: number, variance: number): number {
   return distribution.ppf(Math.random())
 }
 
-interface GraphPoint {
+export interface GraphPoint {
   date: Date
   value: number
 }

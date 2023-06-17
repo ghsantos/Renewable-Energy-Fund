@@ -24,14 +24,26 @@ function Home({ navigation }: HomeProps): JSX.Element {
       />
 
       <View style={[styles.defaultContent, styles.fundTitleContainer]}>
-        <Text style={styles.fundTitle} onPress={() => navigation.navigate('AssetDetails')}>Funds</Text>
+        <Text style={styles.fundTitle}>Funds</Text>
       </View>
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         <View style={styles.fundCards}>
-          <FundCard title="Wind Fund" icon={iconWind} />
-          <FundCard title="Solar Fund" icon={iconSolar} />
-          <FundCard title="Nature Fund" icon={iconNature} />
+          <FundCard
+            title="Wind Fund"
+            icon={iconWind}
+            onPress={() => navigation.navigate('AssetDetails')}
+          />
+          <FundCard
+            title="Solar Fund"
+            icon={iconSolar}
+            onPress={() => navigation.navigate('AssetDetails')}
+          />
+          <FundCard
+            title="Nature Fund"
+            icon={iconNature}
+            onPress={() => navigation.navigate('AssetDetails')}
+          />
         </View>
       </ScrollView>
 

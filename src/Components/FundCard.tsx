@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { LineGraph } from 'react-native-graph'
 import { generateRandomGraphData } from '../utils'
 
@@ -9,9 +9,14 @@ const iconArrowDown = require('../assets/icon_arrow_down.png')
 interface FundCardProps {
   title: string
   icon: any
+  onPress: Function
 }
 
-export default function FundCard({ title, icon }: FundCardProps): JSX.Element {
+export default function FundCard({
+  title,
+  icon,
+  onPress,
+}: FundCardProps): JSX.Element {
   const coinGraphData = generateRandomGraphData(12)
 
   const price = coinGraphData[coinGraphData.length - 1].value
@@ -22,7 +27,7 @@ export default function FundCard({ title, icon }: FundCardProps): JSX.Element {
   const iconVariation = variation < 0 ? iconArrowDown : iconArrowUp
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={() => onPress()}>
       <Image source={icon} />
       <Text style={styles.title}>{title}</Text>
 
@@ -42,7 +47,7 @@ export default function FundCard({ title, icon }: FundCardProps): JSX.Element {
           </Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   )
 }
 
