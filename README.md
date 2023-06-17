@@ -7,4 +7,4 @@ npx react-native run-ios # or
 npx react-native run-android
 ````
 
-![Video](video/video.mp4)
+![Video](video/video.gif)
